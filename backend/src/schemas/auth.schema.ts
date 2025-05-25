@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const authSchema = z.object({
-  fullName: z.string().min(1).optional(),
+  fullname: z.string().min(1).optional(),
   email: z.string().email({ message: 'Invalid email address' }),
   password: z
     .string()

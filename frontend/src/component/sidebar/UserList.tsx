@@ -1,13 +1,20 @@
 import { useState } from 'react';
 import { mockUsers } from '../../data/mockData';
 
-function UserList() {
+function UserList({
+  setSelectedUserId,
+}: {
+  setSelectedUserId: React.Dispatch<React.SetStateAction<string | null>>;
+}) {
   const [users] = useState(mockUsers);
   return (
     <div className="divide-y divide-gray-200">
       {users.map((user) => {
         return (
-          <div className="p-4 flex items-center gap-3 mt-2 cursor-pointer">
+          <div
+            onClick={() => setSelectedUserId(user.id)}
+            className="p-4 flex items-center gap-3 mt-2 cursor-pointer"
+          >
             {/* Avatar */}
             <div className="relative">
               <img

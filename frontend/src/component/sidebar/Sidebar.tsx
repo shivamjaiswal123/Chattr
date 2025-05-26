@@ -3,7 +3,11 @@ import UserList from './UserList';
 
 type Tab = 'chat' | 'new chat';
 
-function Sidebar() {
+function Sidebar({
+  setSelectedUserId,
+}: {
+  setSelectedUserId: React.Dispatch<React.SetStateAction<string | null>>;
+}) {
   const [activeTab, setActiveTab] = useState<Tab>('chat');
 
   return (
@@ -48,13 +52,13 @@ function Sidebar() {
 
       {/* Users */}
       <div className="flex-1 overflow-y-auto">
-        <UserList />
+        <UserList setSelectedUserId={setSelectedUserId} />
       </div>
 
       {/* Profile */}
       <div className="p-4 border-t border-gray-200 bg-white">
         <div className="flex items-center">
-          <div className="size-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium">
+          <div className="size-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium">
             YO
           </div>
           <div className="ml-3">

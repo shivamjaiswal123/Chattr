@@ -8,7 +8,10 @@ export const getUsers = async (req: Request, res: Response) => {
       '-password'
     );
 
-    res.status(200).json(users);
+    res.status(200).json({
+      success: true,
+      users,
+    });
   } catch (error) {
     res.status(500).json({
       message: 'Something went wrong!',

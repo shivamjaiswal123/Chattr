@@ -1,5 +1,5 @@
 function Messages() {
-  return <div className="flex-1">Messages</div>;
+  return <div className="flex-1"></div>;
 }
 
 export default Messages;

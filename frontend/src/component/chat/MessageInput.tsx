@@ -1,15 +1,15 @@
+import { Send, Smile } from 'lucide-react';
+
 function MessageInput() {
   return (
     <form className="bg-white border-t border-gray-200 p-4">
       <div className="flex items-center">
         <button
           type="button"
-          className="p-2 text-gray-500 rounded-full hover:bg-gray-100 transition-colors duration-200"
-        ></button>
-        <button
-          type="button"
-          className="p-2 text-gray-500 rounded-full hover:bg-gray-100 transition-colors duration-200"
-        ></button>
+          className="p-2 text-gray-500 rounded-full hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
+        >
+          <Smile size={20} />
+        </button>
         <input
           type="text"
           placeholder="Type a message..."
@@ -18,8 +18,10 @@ function MessageInput() {
 
         <button
           type="submit"
-          className="p-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors duration-200"
-        />
+          className="p-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors duration-200 cursor-pointer"
+        >
+          <Send size={20} />
+        </button>
       </div>
     </form>
   );

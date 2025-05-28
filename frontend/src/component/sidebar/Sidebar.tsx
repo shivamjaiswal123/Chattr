@@ -1,25 +1,30 @@
 import { useState } from 'react';
 import UserList from './UserList';
+import { Search } from 'lucide-react';
+import type { User } from '../../types';
 
 type Tab = 'chat' | 'new chat';
 
-function Sidebar({
-  setSelectedUserId,
-}: {
-  setSelectedUserId: React.Dispatch<React.SetStateAction<string | null>>;
-}) {
+function Sidebar({ allUsers }: { allUsers: User[] }) {
   const [activeTab, setActiveTab] = useState<Tab>('chat');
+
+  const displayedUsers = activeTab === 'new chat' ? allUsers : [];
 
   return (
     <div className="w-96 flex flex-col">
       {/* Header */}
-      <div className="p-4 space-y-4">
+      <div className="p-4 space-y-3">
         <h1 className="text-xl font-medium">Messages</h1>
-        <input
-          type="text"
-          placeholder="Search users"
-          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-        />
+        <div className="relative">
+          <div className="absolute left-3 top-3">
+            <Search size={18} />
+          </div>
+          <input
+            type="text"
+            placeholder="Search users"
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          />
+        </div>
       </div>
 
       {/* Tab */}
@@ -52,7 +57,10 @@ function Sidebar({
 
       {/* Users */}
       <div className="flex-1 overflow-y-auto">
-        <UserList setSelectedUserId={setSelectedUserId} />
+        <UserList
+          users={displayedUsers}
+          showLastMessage={activeTab === 'chat'}
+        />
       </div>
 
       {/* Profile */}

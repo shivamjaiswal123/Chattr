@@ -1,13 +1,14 @@
-import { useState } from 'react';
-import { mockUsers, type Users } from '../../data/mockData';
 import ChatHeader from './ChatHeader';
 import MessageInput from './MessageInput';
 import Messages from './Messages';
+import { useUser } from '../../context/UserProvider';
+import type { User } from '../../types';
 
-function ChatWindow({ selectedUserId }: { selectedUserId: string | null }) {
-  const [users, setUsers] = useState<Users[]>(mockUsers);
+function ChatWindow({ allUsers }: { allUsers: User[] }) {
+  const { selectedUserId } = useUser();
 
-  const selectedUser = users.find((user) => user.id === selectedUserId) || null;
+  const selectedUser =
+    allUsers.find((user) => user._id === selectedUserId) || null;
 
   if (!selectedUser) {
     return (
@@ -23,7 +24,7 @@ function ChatWindow({ selectedUserId }: { selectedUserId: string | null }) {
   return (
     <div className="flex-1">
       <div className="flex flex-col h-screen">
-        <ChatHeader users={selectedUser} />
+        <ChatHeader user={selectedUser} />
         <Messages />
         <MessageInput />
       </div>

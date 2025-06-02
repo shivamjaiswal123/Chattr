@@ -26,7 +26,7 @@ export const signup = async (req: Request, res: Response) => {
     });
 
     res.status(201).json({
-      status: true,
+      success: true,
       message: 'Account created successfully',
     });
   } catch (error: any) {
@@ -34,11 +34,11 @@ export const signup = async (req: Request, res: Response) => {
     if (error.code === 11000) {
       res
         .status(409)
-        .json({ status: false, message: 'Email is already taken' });
+        .json({ success: false, message: 'Email is already taken' });
       return;
     }
     res.status(500).json({
-      status: false,
+      success: false,
       message: 'Something went wrong!',
     });
     console.error('Error in signup: ', error);
@@ -58,10 +58,10 @@ export const signin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('-password');
     if (!user) {
       res.status(404).json({
-        status: false,
+        success: false,
         message: 'User does not exist',
       });
       return;
@@ -71,7 +71,7 @@ export const signin = async (req: Request, res: Response) => {
 
     if (!checkPassword) {
       res.status(401).json({
-        status: false,
+        success: false,
         message: 'Incorrect Password',
       });
       return;
@@ -85,12 +85,13 @@ export const signin = async (req: Request, res: Response) => {
     };
 
     res.status(200).cookie('token', token, options).json({
-      status: true,
+      success: true,
       message: 'User logged in successfully',
+      user,
     });
   } catch (error) {
     res.status(500).json({
-      status: false,
+      success: false,
       message: 'Something went wrong!',
     });
     console.error('Error in signin: ', error);
@@ -109,12 +110,12 @@ export const me = async (req: Request, res: Response) => {
     }
 
     res.status(200).json({
-      status: true,
+      success: true,
       user,
     });
   } catch (error) {
     res.status(500).json({
-      status: false,
+      success: false,
       message: 'Something went wrong!',
     });
     console.error('Error in me: ', error);
@@ -123,7 +124,7 @@ export const me = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   res.clearCookie('token').json({
-    status: true,
+    success: true,
     message: 'User logged out successfully',
   });
 };

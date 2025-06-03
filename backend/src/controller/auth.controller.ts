@@ -58,7 +58,7 @@ export const signin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email }).select('-password');
+    const user = await User.findOne({ email });
     if (!user) {
       res.status(404).json({
         success: false,

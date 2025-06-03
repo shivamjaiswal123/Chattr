@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import UserList from './UserList';
 import { Search } from 'lucide-react';
-import type { User } from '../../types';
+import { authStore } from '../../store/authStore';
 
 type Tab = 'chat' | 'new chat';
 
-function Sidebar({ allUsers }: { allUsers: User[] }) {
-  const [activeTab, setActiveTab] = useState<Tab>('chat');
+function Sidebar() {
+  const user = authStore((state) => state.user);
 
-  const displayedUsers = activeTab === 'new chat' ? allUsers : [];
+  const [activeTab, setActiveTab] = useState<Tab>('chat');
 
   return (
     <div className="w-96 flex flex-col">
@@ -57,10 +57,7 @@ function Sidebar({ allUsers }: { allUsers: User[] }) {
 
       {/* Users */}
       <div className="flex-1 overflow-y-auto">
-        <UserList
-          users={displayedUsers}
-          showLastMessage={activeTab === 'chat'}
-        />
+        <UserList />
       </div>
 
       {/* Profile */}
@@ -70,7 +67,9 @@ function Sidebar({ allUsers }: { allUsers: User[] }) {
             YO
           </div>
           <div className="ml-3">
-            <p className="text-sm font-medium text-gray-900">Your Name</p>
+            <p className="text-sm font-medium text-gray-900">
+              {user?.fullname}
+            </p>
             <p className="text-xs text-gray-500">Active</p>
           </div>
         </div>

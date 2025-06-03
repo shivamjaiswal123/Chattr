@@ -1,22 +1,21 @@
-import { useUser } from '../../context/UserProvider';
-import type { User } from '../../types';
+import { useState } from 'react';
 
-type LastMessage = boolean;
-function UserList({
-  users,
-  showLastMessage,
-}: {
-  users: User[];
-  showLastMessage: LastMessage;
-}) {
-  const { setSelectedUserId } = useUser();
+const users = [
+  {
+    id: 1,
+    name: 'Shivam',
+  },
+];
+
+function UserList() {
+  const [showLastMessage, setShowLastMessage] = useState(false);
 
   return (
     <div className="divide-y divide-gray-200">
       {users.map((user) => {
         return (
           <div
-            onClick={() => setSelectedUserId(user._id)}
+            key={user.id}
             className="p-4 flex items-center gap-3 mt-2 cursor-pointer"
           >
             {/* Avatar */}
@@ -24,10 +23,10 @@ function UserList({
               <img
                 className="size-12 rounded-full object-cover"
                 src="https://img.daisyui.com/images/profile/demo/superperson@192.webp"
-                alt={user.fullname}
+                alt={user.name}
               />
             </div>
-            <div className="font-medium">{user.fullname}</div>
+            <div className="font-medium">{user.name}</div>
             {/* Last Message */}
             {showLastMessage && (
               <div className="text-sm flex-1">

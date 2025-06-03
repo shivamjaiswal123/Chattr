@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { signup } from '../../api/auth.api';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthProvider';
 
 function Signup() {
   const navigate = useNavigate();
@@ -10,20 +9,12 @@ function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { isAuthenticated } = useAuth();
-
-  if (isAuthenticated) {
-    navigate('/');
-  }
-
   const handleSignup = async () => {
     const user = { fullname, email, password };
     try {
       const res = await signup(user);
-      if (res.status) {
+      if (res.success) {
         navigate('/signin');
-      } else {
-        console.log('Something went wrong');
       }
     } catch (err) {
       console.error('Error in signup: ', err);

@@ -1,14 +1,9 @@
 import ChatHeader from './ChatHeader';
 import MessageInput from './MessageInput';
 import Messages from './Messages';
-import { useUser } from '../../context/UserProvider';
-import type { User } from '../../types';
 
-function ChatWindow({ allUsers }: { allUsers: User[] }) {
-  const { selectedUserId } = useUser();
-
-  const selectedUser =
-    allUsers.find((user) => user._id === selectedUserId) || null;
+function ChatWindow() {
+  const selectedUser = null;
 
   if (!selectedUser) {
     return (
@@ -24,7 +19,7 @@ function ChatWindow({ allUsers }: { allUsers: User[] }) {
   return (
     <div className="flex-1">
       <div className="flex flex-col h-screen">
-        <ChatHeader user={selectedUser} />
+        <ChatHeader />
         <Messages />
         <MessageInput />
       </div>

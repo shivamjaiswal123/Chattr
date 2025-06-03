@@ -1,46 +1,27 @@
-interface Response {
-  status: boolean;
-  message: string;
-}
+import axiosConfig from '../lib/axiosConfig';
+import type { Response } from '../types';
 
 export const signin = async (user: {
   email: string;
   password: string;
 }): Promise<Response> => {
-  const result = await fetch('http://localhost:3000/api/v1/auth/signin', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(user),
-  });
+  const result = await axiosConfig.post('/api/v1/auth/signin', user);
 
-  return result.json();
+  return result.data;
 };
 
 export const signup = async (user: {
+  fullname: string;
   email: string;
   password: string;
 }): Promise<Response> => {
-  const result = await fetch('http://localhost:3000/api/v1/auth/signup', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(user),
-  });
+  const result = await axiosConfig.post('/api/v1/auth/signup', user);
 
-  return result.json();
+  return result.data;
 };
 
-export const session = async () => {
-  const result = await fetch('http://localhost:3000/api/v1/auth/me', {
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return result.json();
+export const me = async (): Promise<Response> => {
+  const result = await axiosConfig('/api/v1/auth/me');
+
+  return result.data;
 };

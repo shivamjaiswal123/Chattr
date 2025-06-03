@@ -1,16 +1,14 @@
 import type React from 'react';
-
+import { useSession } from '../hooks/useSession';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthProvider';
+import Spinner from './Spinner';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, loading } = useAuth();
+  const { user, isLoading } = useSession();
 
-  if (loading) {
-    return <div>Loading</div>;
-  }
+  if (isLoading) return <Spinner />;
 
-  return <div>{isAuthenticated ? children : <Navigate to="/signin" />}</div>;
+  return <div>{user ? children : <Navigate to="/signin" />}</div>;
 }
 
 export default ProtectedRoute;

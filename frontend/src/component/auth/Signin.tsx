@@ -1,29 +1,21 @@
 import { useState } from 'react';
-import { signin } from '../../api/auth.api';
+import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthProvider';
 
 function Signin() {
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
 
-  if (isAuthenticated) {
-    navigate('/');
-  }
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
 
   const handleSignin = async () => {
     const user = { email, password };
-    try {
-      const res = await signin(user);
-      if (res.status) {
-        setIsAuthenticated(true);
-        navigate('/');
-      }
-    } catch (err) {
-      console.error('Error in sign in: ', err);
+
+    const res = await signIn(user);
+
+    if (res.success) {
+      navigate('/');
     }
   };
 
